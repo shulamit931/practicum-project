@@ -68,22 +68,6 @@ namespace MyProject.Services.Services
             return _mapper.Map<PersonDTO>(await _personRepository.UpdatePersonAsync(_mapper.Map<Person>(person)));
         }
 
-        public static WorkSheet ExcelFile(List<PersonDTO> person)
-        {
-            WorkBook workBook = WorkBook.Create(ExcelFileFormat.XLSX);
-            WorkSheet workSheet = workBook.CreateWorkSheet("person list");
-
-            workSheet["A1"].Value = "tz";
-            workSheet["B1"].Value = "name";
-
-            for (int i = 0; i < person.Count(); i++)
-            {
-                workSheet["A" + i+1].Value = person[i].Tz;
-                workSheet["B" + i+1].Value = person[i].FirstName;
-            }
-
-            return workSheet;
-            
-        }
+      
     }
 }

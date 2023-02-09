@@ -37,22 +37,7 @@ namespace MyProject.API.Controllers
             return Ok(result);
         }
 
-        [Route("addFormAndDownload")]
-        [HttpPost]
-        public async Task<ActionResult<WorkSheet>> AddAndDownload([FromBody] FormModel form)
-        {
-            List<PersonDTO> result = new List<PersonDTO>();
-            var user = form.User;
-            var newUser = await _personService.AddUserAsync(user.Tz, user.FirstName, user.LastName, user.BirthDate, user.Kind, user.HMO);
-            result.Add(newUser);
-            foreach (var child in form.Children)
-            {
-                var temp = await _personService.AddchildAsync(child.Tz, child.FirstName, child.LastName, child.BirthDate, newUser);
-                result.Add(temp);
-            }
-            return Ok(PersonService.ExcelFile(result));
-
-        }
+        
 
         [HttpPost]
         public async Task<ActionResult<PersonDTO>> AddUser([FromBody] UserModel user)
