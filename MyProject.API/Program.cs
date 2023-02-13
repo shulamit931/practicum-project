@@ -13,7 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddServices();
-builder.Services.AddDbContext<IContext, DataContext>(options => { options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=ProjectDB;Trusted_Connection=True;"); options.EnableSensitiveDataLogging(); });
+builder.Services.AddDbContext<IContext, DataContext>(options => { options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=DB;Trusted_Connection=True;"); options.EnableSensitiveDataLogging(); });
 var app = builder.Build();
 app.UseCors(x => x
            .AllowAnyOrigin()

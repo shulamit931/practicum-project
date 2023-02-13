@@ -23,9 +23,9 @@ namespace MyProject.Repositories.Repositories
         public async Task<Person> AddChildAsync(string tz, string firstName, string lastName, DateTime birthDate, Person parent)
         {
             var child = new Person() { Tz = tz, FirstName = firstName, LastName = lastName, BirthDate = birthDate, Parent = parent };
-            _context.People.Add(child);
+            var res=_context.People.Add(child);
             await _context.SaveChangesAsync();
-            return child;
+            return res.Entity;
         }
 
         public async Task<Person> AddUserAsync(string tz, string firstName, string lastName, DateTime birthDate, EKind kind, EHMO hMO)
@@ -51,7 +51,8 @@ namespace MyProject.Repositories.Repositories
 
         public async Task<Person> GetPersonByTzAsync(string tz)
         {
-            return await _context.People.FirstOrDefaultAsync(p=>p.Tz==tz);
+            var res= await _context.People.FirstOrDefaultAsync(p=>p.Tz==tz);
+            return res;
         }
 
         public async Task<List<Person>> GetUsersAsync()

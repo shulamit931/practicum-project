@@ -25,8 +25,8 @@ namespace MyProject.Services.Services
 
         public async Task<PersonDTO> AddchildAsync(string tz, string firstName, string lastName, DateTime birthDate, string parentId)
         {
-            var parent = await _personRepository.GetPersonByTzAsync(tz);
-            return _mapper.Map<PersonDTO>(await _personRepository.AddChildAsync(tz, firstName, lastName, birthDate, parent));
+            var parent = await GetPersonByTzAsync(tz);
+            return _mapper.Map<PersonDTO>(await _personRepository.AddChildAsync(tz, firstName, lastName, birthDate,_mapper.Map<Person>(parent)));
         }
         public async Task<PersonDTO> AddchildAsync(string tz, string firstName, string lastName, DateTime birthDate, PersonDTO parent)
         { 

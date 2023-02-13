@@ -11,12 +11,17 @@ namespace MyProject.API.Controllers
     public class ChildrenController : ControllerBase
     {
         private readonly IPersonService _personService;
+        public ChildrenController(IPersonService personService)
+        {
+            _personService = personService;
+        }
 
         [HttpPost]
-        public async Task<ActionResult> AddChild([FromBody] ChildModel child)
+        public async Task<ActionResult<PersonDTO>> AddChild([FromBody] ChildModel child)
         {
-            await _personService.AddchildAsync(child.Tz, child.FirstName, child.LastName, child.BirthDate, child.ParentId);
-            return Ok();
+            if (child == null||child.BirthDate==null||child.Tz==null||child.ParentId==null||child.FirstName==null||child.LastName==null)
+                return BadRequest();
+            return await _personService.AddchildAsync(child.Tz, child.FirstName, child.LastName, child.BirthDate, child.ParentId);
         }
 
         [HttpGet]
@@ -42,7 +47,7 @@ namespace MyProject.API.Controllers
         public async Task<ActionResult<PersonDTO>> Update([FromBody] ChildModel child)
         {
             var parent = _personService.GetPersonByTzAsync(child.ParentId).Result;
-            var childToUpdate = new PersonDTO() { Tz = child.Tz, BirthDate = child.BirthDate, FirstName = child.FirstName, LastName = child.LastName,Parent=parent };
+            var childToUpdate = new PersonDTO() { Tz = child.Tz, BirthDate = child.BirthDate, FirstName = child.FirstName, LastName = child.LastName, Parent = parent };
             return Ok(await _personService.UpdatePersonAsync(childToUpdate));
         }
 
