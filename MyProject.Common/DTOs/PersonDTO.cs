@@ -9,6 +9,7 @@ namespace MyProject.Common.DTOs
 
     public enum EKindDTO { Male, Fmale };
     public enum EHMODTO { Macaby, Meuchedet, Leumit, Clalit };
+    
     public class PersonDTO
     {
         public int Id { get; set; }
@@ -23,10 +24,9 @@ namespace MyProject.Common.DTOs
 
         public DateTime BirthDate { get; set; }
 
-        public EKindDTO Kind { get; set; }
+        public EKindDTO? Kind { get; set; }
 
-        public EHMODTO HMO { get; set; }
-
+        public EHMODTO? HMO { get; set; }
         
     }
 }

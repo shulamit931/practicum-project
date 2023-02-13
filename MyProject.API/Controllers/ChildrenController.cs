@@ -19,9 +19,16 @@ namespace MyProject.API.Controllers
         [HttpPost]
         public async Task<ActionResult<PersonDTO>> AddChild([FromBody] ChildModel child)
         {
-            if (child == null||child.BirthDate==null||child.Tz==null||child.ParentId==null||child.FirstName==null||child.LastName==null)
-                return BadRequest();
-            return await _personService.AddchildAsync(child.Tz, child.FirstName, child.LastName, child.BirthDate, child.ParentId);
+            try
+            {
+                if (child == null || child.BirthDate == null || child.Tz == null || child.ParentId == null || child.FirstName == null || child.LastName == null)
+                    return BadRequest();
+                return await _personService.AddchildAsync(child.Tz, child.FirstName, child.LastName, child.BirthDate, child.ParentId);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]

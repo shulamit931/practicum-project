@@ -25,24 +25,31 @@ namespace MyProject.API.Controllers
         [HttpPost]
         public async Task<ActionResult<List<PersonDTO>>> Add([FromBody] FormModel form)
         {
-            List<PersonDTO> result = new List<PersonDTO>();
-            var user = form.User;
-            var newUser = await _personService.AddUserAsync(user.Tz, user.FirstName, user.LastName, user.BirthDate, user.Kind, user.HMO);
-            result.Add(newUser);
-            foreach (var child in form.Children)
+            try
             {
-                var temp = await _personService.AddchildAsync(child.Tz, child.FirstName, child.LastName, child.BirthDate, newUser);
-                result.Add(temp);
+                List<PersonDTO> result = new List<PersonDTO>();
+                var user = form.User;
+                var newUser = await _personService.AddUserAsync(user.Tz, user.FirstName, user.LastName, user.BirthDate, user.Kind, user.HMO);
+                result.Add(newUser);
+                foreach (var child in form.Children)
+                {
+                    var temp = await _personService.AddchildAsync(child.Tz, child.FirstName, child.LastName, child.BirthDate, newUser);
+                    result.Add(temp);
+                }
+                return Ok(result);
             }
-            return Ok(result);
+            catch (Exception ex) { return BadRequest(ex.Message); }
         }
-
-        
 
         [HttpPost]
         public async Task<ActionResult<PersonDTO>> AddUser([FromBody] UserModel user)
         {
-            return await _personService.AddUserAsync(user.Tz, user.FirstName, user.LastName, user.BirthDate, user.Kind, user.HMO);
+            try
+            {
+                return await _personService.AddUserAsync(user.Tz, user.FirstName, user.LastName, user.BirthDate, user.Kind, user.HMO);
+
+            }
+            catch (Exception ex) { return BadRequest(ex); }
         }
 
         [Route("getAll")]
@@ -73,6 +80,7 @@ namespace MyProject.API.Controllers
             var userToUpdate = new PersonDTO() { Tz = user.Tz, FirstName = user.FirstName, LastName = user.LastName, BirthDate = user.BirthDate, Kind = user.Kind, HMO = user.HMO };
             return await _personService.UpdatePersonAsync(userToUpdate);
         }
+
         [HttpDelete("{tz}")]
         public async Task<ActionResult> Remove(string tz)
         {

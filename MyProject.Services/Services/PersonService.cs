@@ -28,6 +28,7 @@ namespace MyProject.Services.Services
             var parent = await GetPersonByTzAsync(tz);
             return _mapper.Map<PersonDTO>(await _personRepository.AddChildAsync(tz, firstName, lastName, birthDate,_mapper.Map<Person>(parent)));
         }
+
         public async Task<PersonDTO> AddchildAsync(string tz, string firstName, string lastName, DateTime birthDate, PersonDTO parent)
         { 
             return _mapper.Map<PersonDTO>(await _personRepository.AddChildAsync(tz, firstName, lastName, birthDate,_mapper.Map<Person>(parent)));
@@ -43,6 +44,11 @@ namespace MyProject.Services.Services
            return _mapper.Map<List<PersonDTO>>(await _personRepository.GetAllAsync());
         }
 
+        public async Task<List<PersonDTO>> GetUsersAsync()
+        {
+            return _mapper.Map<List<PersonDTO>>(await _personRepository.GetUsersAsync());
+        }
+
         public async Task<List<PersonDTO>> GetChildrenAsync()
         {
             return _mapper.Map <List<PersonDTO>>(await _personRepository.GetChildrenAsync());
@@ -51,11 +57,6 @@ namespace MyProject.Services.Services
         public async Task<PersonDTO> GetPersonByTzAsync(string tz)
         {
             return  _mapper.Map<PersonDTO>(await _personRepository.GetPersonByTzAsync(tz));
-        }
-
-        public async Task<List<PersonDTO>> GetUsersAsync()
-        {
-            return _mapper.Map<List<PersonDTO>>(await _personRepository.GetUsersAsync());
         }
 
         public async Task RemovePersonAsync(string tz)

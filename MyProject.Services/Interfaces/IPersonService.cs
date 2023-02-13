@@ -10,19 +10,19 @@ namespace MyProject.Services.Interfaces
 {
     public interface IPersonService
     {
-        Task<PersonDTO> AddchildAsync(string tz, string firstName, string lastName, DateTime birthDate, PersonDTO parent);
-
         Task<PersonDTO> AddUserAsync(string tz, string firstName, string lastName, DateTime birthDate, EKindDTO kind, EHMODTO HMO);
+
+        Task<PersonDTO> AddchildAsync(string tz, string firstName, string lastName, DateTime birthDate, PersonDTO parent);
 
         Task<PersonDTO> AddchildAsync(string tz, string firstName, string lastName, DateTime birthDate, string parentId);
 
         Task<List<PersonDTO>> GetAllAsync();
 
+        Task<List<PersonDTO>> GetUsersAsync();
+
         Task<List<PersonDTO>> GetChildrenAsync();
 
         Task<PersonDTO> GetPersonByTzAsync(string tz);
-
-        Task<List<PersonDTO>> GetUsersAsync();
 
         Task<PersonDTO> UpdatePersonAsync(PersonDTO person);
 
