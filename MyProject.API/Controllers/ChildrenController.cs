@@ -21,8 +21,6 @@ namespace MyProject.API.Controllers
         {
             try
             {
-                if (child == null || child.BirthDate == null || child.Tz == null || child.ParentId == null || child.FirstName == null || child.LastName == null)
-                    return BadRequest();
                 return await _personService.AddchildAsync(child.Tz, child.FirstName, child.LastName, child.BirthDate, child.ParentId);
             }
             catch (Exception ex)

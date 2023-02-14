@@ -23,7 +23,7 @@ namespace MyProject.Repositories.Repositories
         public async Task<Person> AddChildAsync(string tz, string firstName, string lastName, DateTime birthDate, Person parent)
         {
             var child = new Person() { Tz = tz, FirstName = firstName, LastName = lastName, BirthDate = birthDate, Parent = parent };
-            if (GetPersonByTzAsync(tz) != null)
+            if( (await GetPersonByTzAsync(tz)) != null)
             {
                 throw new Exception($"person already exist {tz}");
             }
@@ -35,7 +35,7 @@ namespace MyProject.Repositories.Repositories
         public async Task<Person> AddUserAsync(string tz, string firstName, string lastName, DateTime birthDate, EKind kind, EHMO hMO)
         {
             var user = new Person() { Tz = tz, FirstName = firstName, LastName = lastName, BirthDate = birthDate, Kind = kind, HMO = hMO };
-            if (GetPersonByTzAsync(tz) != null)
+            if ((await GetPersonByTzAsync(tz)) != null)
             {
                 throw new Exception($"person already exist {tz}");
             }
